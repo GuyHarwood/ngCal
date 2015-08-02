@@ -47,20 +47,34 @@
 					console.log('startOffset:%i day is %s',startOffset, $scope.startDay);
 					
 					var day = 1;
-					var weeks = 6;
-					var totalCells = weeks * 7;
+					var weekCount = 6;
+					var totalCells = weekCount * 7;
+					var weeks = new Array(weekCount);
+					var weekIndex = 0;
+					var weekdayIndex = -1;
+					
 					for(var i = 0; i < totalCells; i++){
-						var weeks = new Array(weeks);
-						//if first week
+						
+						weekdayIndex++;
+						
+						if(weekdayIndex == 7){
+							weekdayIndex = 0;
+							weekIndex++;
+						}
+						
+						console.log('week %i, weekday %i, cell %i, day %i', weekIndex, weekdayIndex, i, day);
+						
+						//skip days until 1st of month
 						if(i < startOffset || day > 31){
-							//skip days until 1st of month
 								continue;
 						}
 						
-						console.log('cell %i, day %i', i, day);
+						//get current week as an index of weeks array
+						
 						
 						
 						day++;
+						
 					}
 				};
 				
