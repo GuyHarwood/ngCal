@@ -51,30 +51,51 @@
 					var totalCells = weekCount * 7;
 					var weeks = new Array(weekCount);
 					var weekIndex = 0;
-					var weekdayIndex = -1;
+					var weekdayIndex = 0;
+					var currentWeek;
+					var currentDay;
+					var totalDaysInMonth = 31; //TODO
+					
+					var month = {
+						startOffset : startOffset,
+						totalDays : totalDaysInMonth,
+						days : [],
+						init : function(month, year){
+							for(var day = 1; day <= totalDaysInMonth; day++){
+								days.push({
+									display : day
+								})
+							}
+						}
+					};
 					
 					for(var i = 0; i < totalCells; i++){
-						
-						weekdayIndex++;
-						
-						if(weekdayIndex == 7){
-							weekdayIndex = 0;
-							weekIndex++;
+										
+						if(weekdayIndex == 0){
+							//initialise week
+							currentWeek = {
+								days : []
+							};
 						}
-						
+																		
 						console.log('week %i, weekday %i, cell %i, day %i', weekIndex, weekdayIndex, i, day);
 						
 						//skip days until 1st of month
-						if(i < startOffset || day > 31){
+						if(i < startOffset || day > lastDayOfMonth){
 								continue;
 						}
 						
-						//get current week as an index of weeks array
-						
+						currentDay = {
+							display 
+						};
 						
 						
 						day++;
+						weekdayIndex++;
 						
+						if(weekdayIndex == 7){
+							weekIndex++;
+						}
 					}
 				};
 				
