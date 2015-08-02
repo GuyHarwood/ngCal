@@ -59,10 +59,10 @@
 					var month = {
 						startOffset : startOffset,
 						totalDays : totalDaysInMonth,
-						days : [],
+						days : new Array(totalDaysInMonth),
 						init : function(month, year){
 							for(var day = 1; day <= totalDaysInMonth; day++){
-								days.push({
+								this.days.push({
 									display : day
 								})
 							}
@@ -70,17 +70,19 @@
 					};
 					
 					var uiStructure = {
-						weeks : [],
+						weeks : new Array(weekCount),
 						init : function(month){
-							for(var week = 0; week < weekCount; week++){
+							for(var weekIdx = 0; weekIdx < weekCount; weekIdx++){
 								
-								week.days = [];
-								
+								var week = {
+									days: new Array(7)	
+								};
+																
 								for(var weekday = 1; weekday < 8; weekday++){
 									
 									var dayNumber = '';
 									
-									if(weekday >= startOffset)
+									if(weekday >= startOffset && weekday <= month.totalDays)
 										dayNumber = weekday.toString();
 									
 									week.days.push({
@@ -88,13 +90,15 @@
 									});
 								}
 								
-								weeks.push(week);
+								this.weeks.push(week);
 							}
 						}	
 					};
 					
 					month.init(8, 2015);
 					uiStructure.init(month);
+					
+					$scope.calendar = uiStructure;
 					
 					/*for(var i = 0; i < totalCells; i++){
 										
