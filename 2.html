@@ -16,8 +16,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="week in weeks">
-								<td ng-repeat="day in days">{{ days.indexOf(day) }}</td>
+							<tr ng-repeat="week in calendar.weeks track by $index">
+								<td ng-repeat="day in week.days track by $index">{{ day.text }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -59,7 +59,7 @@
 					var month = {
 						startOffset : startOffset,
 						totalDays : totalDaysInMonth,
-						days : new Array(totalDaysInMonth),
+						days : [],
 						init : function(month, year){
 							for(var day = 1; day <= totalDaysInMonth; day++){
 								this.days.push({
@@ -69,36 +69,37 @@
 						}
 					};
 					
-					var uiStructure = {
-						weeks : new Array(weekCount),
-						init : function(month){
-							for(var weekIdx = 0; weekIdx < weekCount; weekIdx++){
-								
+					var calendar = {
+						weeks : [],
+						init : function(startOffset, daysInMonth){
+							var cell = 0;
+							var currentDay = 1;
+							for(var wx = 0; wx < 6; wx++){
 								var week = {
-									days: new Array(7)	
+									days : []
 								};
-																
-								for(var weekday = 1; weekday < 8; weekday++){
+								for(var dx = 0; dx < 7; dx++){
 									
-									var dayNumber = '';
-									
-									if(weekday >= startOffset && weekday <= month.totalDays)
-										dayNumber = weekday.toString();
-									
+									var dayText = '';
+									if(cell >= startOffset && currentDay <= daysInMonth){
+										dayText = currentDay.toString();
+										currentDay++;
+									}
 									week.days.push({
-										day : dayNumber
+										text : dayText
 									});
+									cell++;
+									
 								}
-								
 								this.weeks.push(week);
 							}
+							
 						}	
 					};
 					
-					month.init(8, 2015);
-					uiStructure.init(month);
-					
-					$scope.calendar = uiStructure;
+					calendar.init(6, 31);
+					console.log('calendar %o', calendar);
+					$scope.calendar = calendar;
 					
 					/*for(var i = 0; i < totalCells; i++){
 										
