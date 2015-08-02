@@ -31,43 +31,16 @@
 			app.controller('Ctrl', function($scope) {
 				var self = this;
 				$scope.days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-				$scope.weeks = [1,2,3,4,5];
 				
 				var init = function(startMonth, startYear){
 					var outputFormat = "MM-DD-YYYY";
 					var now = moment();
-					console.log('current date is %s', moment().format(outputFormat));
-					//construct first date object
 					var start = moment({ y:startYear, M:startMonth - 1, d:1 });
-					//work out day offset from sunday
 					var startOffset = start.day();
-					//use offset to start loop part way in first row
-					$scope.startDay = $scope.days[startOffset];
-					console.log('starting calendar on %s',start.format(outputFormat));
-					console.log('startOffset:%i day is %s',startOffset, $scope.startDay);
-					
-					var day = 1;
 					var weekCount = 6;
 					var totalCells = weekCount * 7;
-					var weeks = new Array(weekCount);
-					var weekIndex = 0;
-					var weekdayIndex = 0;
-					var currentWeek;
-					var currentDay;
-					var totalDaysInMonth = 31; //TODO
-					
-					var month = {
-						startOffset : startOffset,
-						totalDays : totalDaysInMonth,
-						days : [],
-						init : function(month, year){
-							for(var day = 1; day <= totalDaysInMonth; day++){
-								this.days.push({
-									display : day
-								})
-							}
-						}
-					};
+					var daysInMonth = new Date(startYear, startMonth, 0).getDate();
+					console.log('number of days in month %i is %i', startMonth, daysInMonth);
 					
 					var calendar = {
 						weeks : [],
@@ -93,42 +66,14 @@
 								}
 								this.weeks.push(week);
 							}
-							
 						}	
 					};
 					
-					calendar.init(6, 31);
-					console.log('calendar %o', calendar);
+					calendar.init(startOffset, daysInMonth);
 					$scope.calendar = calendar;
-					
-					/*for(var i = 0; i < totalCells; i++){
-										
-						if(weekdayIndex == 0){
-							//initialise week
-							currentWeek = {
-								days : []
-							};
-						}
-																		
-						console.log('week %i, weekday %i, cell %i, day %i', weekIndex, weekdayIndex, i, day);
-						
-						//skip days until 1st of month
-						if(i < startOffset || day > totalDaysInMonth){
-								continue;
-						}
-						
-											
-						
-						day++;
-						weekdayIndex++;
-						
-						if(weekdayIndex == 7){
-							weekIndex++;
-						}
-					}*/
 				};
 				
-				init(8,2015);
+				init(10,2015);
 			});
 		</script>
 	</body>
