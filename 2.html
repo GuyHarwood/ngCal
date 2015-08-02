@@ -42,10 +42,26 @@
 					//work out day offset from sunday
 					var startOffset = start.day();
 					//use offset to start loop part way in first row
-					var startDay = $scope.days[startOffset];
+					$scope.startDay = $scope.days[startOffset];
 					console.log('starting calendar on %s',start.format(outputFormat));
-					console.log('startOffset:%i day is %s',startOffset, startDay);
-					//every 7, move to new row until hit 35
+					console.log('startOffset:%i day is %s',startOffset, $scope.startDay);
+					
+					var day = 1;
+					var weeks = 6;
+					var totalCells = weeks * 7;
+					for(var i = 0; i < totalCells; i++){
+						var weeks = new Array(weeks);
+						//if first week
+						if(i < startOffset || day > 31){
+							//skip days until 1st of month
+								continue;
+						}
+						
+						console.log('cell %i, day %i', i, day);
+						
+						
+						day++;
+					}
 				};
 				
 				init(8,2015);
