@@ -69,7 +69,34 @@
 						}
 					};
 					
-					for(var i = 0; i < totalCells; i++){
+					var uiStructure = {
+						weeks : [],
+						init : function(month){
+							for(var week = 0; week < weekCount; week++){
+								
+								week.days = [];
+								
+								for(var weekday = 1; weekday < 8; weekday++){
+									
+									var dayNumber = '';
+									
+									if(weekday >= startOffset)
+										dayNumber = weekday.toString();
+									
+									week.days.push({
+										day : dayNumber
+									});
+								}
+								
+								weeks.push(week);
+							}
+						}	
+					};
+					
+					month.init(8, 2015);
+					uiStructure.init(month);
+					
+					/*for(var i = 0; i < totalCells; i++){
 										
 						if(weekdayIndex == 0){
 							//initialise week
@@ -81,14 +108,11 @@
 						console.log('week %i, weekday %i, cell %i, day %i', weekIndex, weekdayIndex, i, day);
 						
 						//skip days until 1st of month
-						if(i < startOffset || day > lastDayOfMonth){
+						if(i < startOffset || day > totalDaysInMonth){
 								continue;
 						}
 						
-						currentDay = {
-							display 
-						};
-						
+											
 						
 						day++;
 						weekdayIndex++;
@@ -96,7 +120,7 @@
 						if(weekdayIndex == 7){
 							weekIndex++;
 						}
-					}
+					}*/
 				};
 				
 				init(8,2015);
