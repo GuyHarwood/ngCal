@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div class="container" ng-controller="Ctrl">
-			<h1>{{ monthHeader }}</h1>
+			<h1>{{ calendarHeader }}</h1>
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table table-striped">
@@ -24,9 +24,33 @@
 					</table>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table-condensed table-bordered table-striped table-responsive">
+						<thead>
+							<tr>
+								<th class="text-center" style="background-color: #F5F5F5;" colspan="7">
+									<a class="btn calhead"><i class="fa fa-chevron-left"></i></a>
+									<a class="btn calhead">{{ calendarHeader }}</a>
+									<a class="btn calhead"><i class="fa fa-chevron-right"></i></a>
+								</th>
+							</tr>
+							<tr>
+								<th ng-repeat="day in days">{{ day.substr(0,2) }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="week in calendar.weeks track by $index">
+								<td ng-repeat="day in week.days track by $index" class="">{{ day.text }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"
+		charset="UTF-8"></script>
 		<script type="text/javascript">
 			var app = angular.module('app', []);
 			app.controller('Ctrl', function($scope) {
@@ -36,7 +60,7 @@
 				var init = function(startMonth, startYear){
 					var outputFormat = "MM-DD-YYYY";
 					var now = moment();
-					$scope.monthHeader = now.format("MMMM");
+					$scope.calendarHeader = now.format("MMMM YYYY");
 					var start = moment({ y:startYear, M:startMonth - 1, d:1 });
 					var startOffset = start.day();
 					var weekCount = 6;
@@ -61,7 +85,8 @@
 										currentDay++;
 									}
 									week.days.push({
-										text : dayText
+										text : dayText,
+										state : 'muted'
 									});
 									cell++;
 									
